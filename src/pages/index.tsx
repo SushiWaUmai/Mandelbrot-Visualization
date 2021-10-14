@@ -1,11 +1,10 @@
 import type { NextPage } from "next";
+import dynamic from 'next/dynamic'
+const MandelBrotCanvas  = dynamic( () => import('../components/MandelBrotCanvas'), { ssr: false } )
+
 
 const Home: NextPage = () => {
-  return (
-    <div>
-      <h1>Hello World</h1>
-    </div>
-  );
+  return <MandelBrotCanvas />;
 };
 
 export default Home;
