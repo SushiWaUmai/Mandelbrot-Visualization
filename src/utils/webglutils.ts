@@ -22,6 +22,7 @@ export const createShader = (
   }
 
   gl.deleteShader(shader);
+  throw "Could not create shader";
 };
 
 export const createProgram = (
@@ -43,4 +44,5 @@ export const createProgram = (
   }
 
   gl.deleteProgram(program);
+  throw "Could not create Program";
 };
