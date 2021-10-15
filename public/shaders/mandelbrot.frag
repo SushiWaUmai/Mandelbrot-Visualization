@@ -3,8 +3,8 @@
 precision highp float;
 
 in vec2 screenSize;
-// uniform vec3 _position;
-// in float zoom;
+in float zoom;
+in float iterations;
 
 out vec4 outColor;
 
@@ -12,11 +12,6 @@ vec3 HUEtoRGB(float H);
 vec3 HSVtoRGB(vec3 HSV);
 
 void main(void) {
-    // vec2 screenSize = vec2(1000.0, 1000.0);
-    // vec2 screenSize = vec2(928, 941);
-    
-    float zoom = 0.1;
-
     float x = gl_FragCoord.x - screenSize.x / 2.0;
     float y = gl_FragCoord.y - screenSize.y / 2.0;
 
@@ -24,7 +19,6 @@ void main(void) {
     vec2 c = vec2(x / screenSize.x / zoom, y / screenSize.x / zoom);
 
     float i = 0.0;
-    float iterations = 500.0;
 
     while (r.x * r.x + r.y * r.y <= 4.0 && i < iterations)
     {
