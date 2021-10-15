@@ -1,44 +1,56 @@
-import React, { FunctionComponent, useEffect, useState } from "react";
-import p5Types from "p5";
-import Sketch from "react-p5";
+import React, { useRef, FunctionComponent, useState, useEffect } from "react";
+import Shader from "../utils/shader";
+import { loadFile } from "../utils/webglutils";
 
 interface MandelBrotCanvasProps {}
 
 const MandelBrotCanvas: FunctionComponent<MandelBrotCanvasProps> = () => {
-  let p5Canvas: p5Types.Renderer;
-  let mandelBrot: p5Types.Shader;
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [shader, setShader] = useState<Shader>();
 
-  const preload = (p5: p5Types) => {
-    mandelBrot = p5.loadShader(
-      "shaders/mandelbrot.vert",
-      "shaders/mandelbrot.frag"
-    );
-  };
+  useEffect(() => {
+    const updateCanvasSize = () => {
+      if (canvasRef.current) {
+        canvasRef.current.width = window.innerWidth;
+        canvasRef.current.height = window.innerHeight;
+      }
+    };
 
-  const setup = (p5: p5Types, canvasParentRef: Element) => {
-    p5Canvas = p5
-      .createCanvas(p5.windowWidth, p5.windowHeight, p5.WEBGL)
-      .parent(canvasParentRef);
+    const handleStart = async () => {
+      if (canvasRef.current) {
+        var gl = canvasRef.current.getContext("webgl2");
+        if (!gl) {
+          console.log("No WebGL2 avaiable");
+          return;
+        }
 
-    p5Canvas.position(0, 0);
-    p5.shader(mandelBrot);
-  };
+        var vertSrc = await loadFile("shaders/mandelbrot.vert");
+        var fragSrc = await loadFile("shaders/mandelbrot.frag");
 
-  const draw = (p5: p5Types) => {
-    p5.rect(0, 0, p5.width, p5.height);
-  };
+        const s = new Shader(gl, vertSrc, fragSrc);
+        setShader(s);
 
-  const windowResized = (p5: p5Types) => {
-    p5.resizeCanvas(p5.windowWidth, p5.windowHeight);
+        gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
+        gl.clearColor(0, 0, 0, 0);
+        gl.clear(gl.COLOR_BUFFER_BIT);
+      }
+    };
+
+    window.addEventListener("resize", updateCanvasSize);
+
+    updateCanvasSize();
+    handleStart();
+  }, []);
+
+  const handleUpdate = () => {
+    shader?.quad();
   };
 
   return (
-    <Sketch
-      setup={setup}
-      draw={draw}
-      windowResized={windowResized}
-      preload={preload}
-    />
+    <main>
+      <canvas className="fixed top-0 left-0" ref={canvasRef} />
+      <button onClick={handleUpdate}>Update</button>
+    </main>
   );
 };
 
