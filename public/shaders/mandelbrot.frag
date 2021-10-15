@@ -13,7 +13,7 @@ vec3 HSVtoRGB(vec3 HSV);
 
 void main(void) {
     // vec2 screenSize = vec2(1000.0, 1000.0);
-    vec2 screenSize = vec2(928, 941);
+    // vec2 screenSize = vec2(928, 941);
     
     float zoom = 0.1;
 
@@ -21,7 +21,7 @@ void main(void) {
     float y = gl_FragCoord.y - screenSize.y / 2.0;
 
     vec2 r = vec2(0, 0);
-    vec2 c = vec2(x / screenSize.x / zoom, y / screenSize.y / zoom);
+    vec2 c = vec2(x / screenSize.x / zoom, y / screenSize.x / zoom);
 
     float i = 0.0;
     float iterations = 500.0;

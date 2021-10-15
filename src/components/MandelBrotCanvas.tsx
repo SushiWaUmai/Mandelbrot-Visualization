@@ -10,7 +10,7 @@ const MandelBrotCanvas: FunctionComponent<MandelBrotCanvasProps> = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [GL, setGL] = useState<WebGL2RenderingContext>();
   const [shader, setShader] = useState<Shader>();
-  const { width, height } = useWindowSize();
+  const size = useWindowSize();
 
   const handleUpdate = () => {
     shader?.quad();
@@ -18,6 +18,8 @@ const MandelBrotCanvas: FunctionComponent<MandelBrotCanvasProps> = () => {
 
   const updateCanvasSize = () => {
     if (canvasRef.current) {
+      const width = window.innerWidth;
+      const height = window.innerHeight;
       canvasRef.current.width = width;
       canvasRef.current.height = height;
 
@@ -49,14 +51,14 @@ const MandelBrotCanvas: FunctionComponent<MandelBrotCanvasProps> = () => {
     };
 
     updateCanvasSize();
-    handleUpdate();
     handleStart();
+    handleUpdate();
   }, []);
 
   useEffect(() => {
     updateCanvasSize();
     handleUpdate();
-  }, [canvasRef, shader, width, height]);
+  }, [canvasRef, shader, size]);
 
   return (
     <main>
