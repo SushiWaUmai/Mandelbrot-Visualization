@@ -4,6 +4,7 @@ import { clamp, lerp } from "../utils/mathhelper";
 import Shader from "../utils/shader";
 import { loadFile } from "../utils/webglutils";
 import NavbarComponent from "./NavbarComponent";
+import Head from "next/head";
 
 interface MandelBrotCanvasProps {}
 
@@ -13,8 +14,16 @@ const MandelBrotCanvas: FunctionComponent<MandelBrotCanvasProps> = () => {
   const [shader, setShader] = useState<Shader>();
   const [scale, setScale] = useState(1);
   const [iterations, setIterations] = useState(80);
+  const [mouseDown, setMouseDown] = useState(false);
   const [center, setCenter] = useState([0, 0]);
   const size = useWindowSize();
+
+  const handleReset = () => {
+    setCenter([0, 0]);
+    setMouseDown(false);
+    setScale(1);
+    setIterations(80);
+  };
 
   const handleUpdate = () => {
     shader?.quad();
@@ -35,7 +44,9 @@ const MandelBrotCanvas: FunctionComponent<MandelBrotCanvasProps> = () => {
   useEffect(() => {
     const handleStart = async () => {
       if (canvasRef.current) {
-        var gl = canvasRef.current.getContext("webgl2");
+        var gl = canvasRef.current.getContext("webgl2", {
+          preserveDrawingBuffer: true,
+        });
         if (!gl) {
           console.log("No WebGL2 avaiable");
           return;
@@ -79,8 +90,8 @@ const MandelBrotCanvas: FunctionComponent<MandelBrotCanvasProps> = () => {
       const x = center[0] - cvtX(e.pageX) * scaleChange;
       const y = center[1] + cvtY(e.pageY) * scaleChange;
 
-      setCenter([x, y]);
       setScale(scale * zoom);
+      setCenter([x, y]);
     };
 
     canvasRef.current?.addEventListener("wheel", handleZoom);
@@ -91,10 +102,39 @@ const MandelBrotCanvas: FunctionComponent<MandelBrotCanvasProps> = () => {
   }, [canvasRef, scale, center]);
 
   useEffect(() => {
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    const handleMouseDown = () => {
+      setMouseDown(true);
+    };
+    const handleMouseMove = (e: MouseEvent) => {
+      if (mouseDown) {
+        setCenter((prev) => [
+          prev[0] - ((e.movementX * 2) / height) * scale,
+          prev[1] + ((e.movementY * 2) / height) * scale,
+        ]);
+      }
+    };
+    const handleMouseUp = () => {
+      setMouseDown(false);
+    };
+    canvasRef.current?.addEventListener("mousedown", handleMouseDown);
+    canvasRef.current?.addEventListener("mousemove", handleMouseMove);
+    canvasRef.current?.addEventListener("mouseup", handleMouseUp);
+
+    return () => {
+      canvasRef.current?.removeEventListener("mousedown", handleMouseDown);
+      canvasRef.current?.removeEventListener("mousemove", handleMouseMove);
+      canvasRef.current?.removeEventListener("mouseup", handleMouseUp);
+    };
+  }, [mouseDown, center, scale]);
+
+  useEffect(() => {
     shader?.setFloat("_scale", scale);
     shader?.setVec2("_center", center);
     handleUpdate();
-  }, [scale, center, shader]);
+  }, [center, shader]);
 
   useEffect(() => {
     shader?.setFloat("_iterations", iterations);
@@ -106,16 +146,56 @@ const MandelBrotCanvas: FunctionComponent<MandelBrotCanvasProps> = () => {
     handleUpdate();
   }, [shader, size]);
 
+  const handleDownload = function () {
+    if (canvasRef.current) {
+      var link = document.createElement("a");
+      link.download = "Mandelbrot.png";
+      link.href = canvasRef.current.toDataURL("img/png");
+      link.click();
+    }
+  };
+
   return (
-    <main>
-      <canvas
-        className="block absolute top-0 left-0 right-0 bottom-0"
-        ref={canvasRef}
-      />
-      <div className="absolute top-0 left-0 right-0 flex flex-col justify-center">
-        <NavbarComponent />
-      </div>
-    </main>
+    <>
+      <Head>
+        <title>Mandelbrot set visualization</title>
+      </Head>
+      <main>
+        <canvas
+          className="block absolute top-0 left-0 right-0 bottom-0"
+          ref={canvasRef}
+        />
+        <div className="absolute top-0 left-0 right-0">
+          <NavbarComponent />
+          <div className="bg-gray-800 bg-opacity-50 flex justify-center">
+            <div className="flex justify-between container">
+              <div className="flex align-middle items-center mx-3 gap-x-3">
+                <label className="text-white">Iterations</label>
+                <input
+                  type="range"
+                  min={1}
+                  max={500}
+                  value={iterations}
+                  onChange={(e) => setIterations(parseInt(e.target.value))}
+                />
+              </div>
+              <div className="flex flex-row-reverse mx-3 gap-x-3">
+                <div className="bg-blue-400 rounded px-3 py-2 my-2">
+                  <button onClick={handleDownload}>
+                    <h1 className="text-bold">Download</h1>
+                  </button>
+                </div>
+                <div className="bg-green-400 rounded px-3 py-2 my-2">
+                  <button onClick={handleReset}>
+                    <h1 className="text-bold">Reset</h1>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </>
   );
 };
 

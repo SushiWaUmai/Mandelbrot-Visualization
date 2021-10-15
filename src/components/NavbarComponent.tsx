@@ -6,7 +6,7 @@ interface NavbarComponentProps {}
 
 const NavbarComponent: FunctionComponent<NavbarComponentProps> = () => {
   return (
-    <div className="text-white bg-gray-900 p-3">
+    <div className="text-white bg-gray-900 bg-opacity-50 p-3 flex justify-center">
       <div className="container mx-2 lg:mx-auto">
         <div className="flex justify-between">
           <span>
@@ -27,13 +27,13 @@ const NavbarComponent: FunctionComponent<NavbarComponentProps> = () => {
                 </div>
               </Link>
             </span>
-            <span className="inline-block">
+            {/* <span className="inline-block">
               <Link passHref href="/about">
                 <div className="btn btn-effect flex align-middle items-center py-1">
                   <h1 className="text-bold">About</h1>
                 </div>
               </Link>
-            </span>
+            </span> */}
           </div>
         </div>
       </div>
