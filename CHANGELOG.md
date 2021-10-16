@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.2.0](https://github.com/SushiWaUmai/Mandelbrot-Visualization/compare/v1.1.0...v1.2.0) (2021-10-16)
+
+
+### Features
+
+* :construction_worker: add pwa ([106936d](https://github.com/SushiWaUmai/Mandelbrot-Visualization/commit/106936d474edd399a79e5611924559203bdecc40))
+
 ## [1.1.0](https://github.com/SushiWaUmai/Mandelbrot-Visualization/compare/v1.0.2...v1.1.0) (2021-10-16)
 
 
