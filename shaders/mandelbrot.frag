@@ -2,10 +2,11 @@
  
 precision highp float;
 
-in vec2 screenSize;
-in float scale;
-in float iterations;
-in vec2 center;
+uniform sampler2D _tex;
+uniform float _scale;
+uniform vec2 _screenSize;
+uniform float _iterations;
+uniform vec2 _center;
 
 out vec4 outColor;
 
@@ -13,16 +14,16 @@ vec3 HUEtoRGB(float H);
 vec3 HSVtoRGB(vec3 HSV);
 
 void main(void) {
-    float xOffset = (screenSize.x - screenSize.y) / screenSize.y;
-    float x = (gl_FragCoord.x / screenSize.y - 0.5) * 2.0 - xOffset;
-    float y = (gl_FragCoord.y / screenSize.y - 0.5) * 2.0;
+    float xOffset = (_screenSize.x - _screenSize.y) / _screenSize.y;
+    float x = (gl_FragCoord.x / _screenSize.y - 0.5) * 2.0 - xOffset;
+    float y = (gl_FragCoord.y / _screenSize.y - 0.5) * 2.0;
 
     vec2 r = vec2(0, 0);
-    vec2 c = vec2(x * scale, y * scale) + center;
+    vec2 c = vec2(x * _scale, y * _scale) + _center;
 
     float i = 0.0;
 
-    while (r.x * r.x + r.y * r.y <= 4.0 && i < iterations)
+    while (r.x * r.x + r.y * r.y <= 4.0 && i < _iterations)
     {
         r = vec2(r.x * r.x - r.y * r.y, 2.0 * r.x * r.y) + c;
         i++;
@@ -30,7 +31,8 @@ void main(void) {
 
     i += log(log2(sqrt(r.x * r.x + r.y * r.y)));
 
-    outColor = vec4(HSVtoRGB(vec3(i / iterations, 1, i < iterations ? 0.75 : 0.0)), 1.0);
+    // outColor = vec4(HSVtoRGB(vec3(i / _iterations, 1, i < _iterations ? 0.75 : 0.0)), 1.0);
+    outColor = texture(_tex, vec2(i / _iterations, 0.5));  
 }
 
 vec3 HUEtoRGB(float H)
