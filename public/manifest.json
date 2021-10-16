@@ -15,7 +15,7 @@
       "purpose": "maskable any"
     }
   ],
-  "start_url": "/",
+  "start_url": "/Mandelbrot-Visualization/",
   "display": "standalone",
   "orientation": "landscape",
   "theme_color": "#fc2403",
