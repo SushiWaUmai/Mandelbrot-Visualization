@@ -156,46 +156,41 @@ const MandelBrotCanvas: FunctionComponent<MandelBrotCanvasProps> = () => {
   };
 
   return (
-    <>
-      <Head>
-        <title>Mandelbrot set visualization</title>
-      </Head>
-      <main>
-        <canvas
-          className="block absolute top-0 left-0 right-0 bottom-0"
-          ref={canvasRef}
-        />
-        <div className="absolute top-0 left-0 right-0">
-          <NavbarComponent />
-          <div className="bg-gray-800 bg-opacity-50 flex justify-center">
-            <div className="flex justify-between container">
-              <div className="flex align-middle items-center mx-3 gap-x-3">
-                <label className="text-white">Iterations</label>
-                <input
-                  type="range"
-                  min={1}
-                  max={500}
-                  value={iterations}
-                  onChange={(e) => setIterations(parseInt(e.target.value))}
-                />
+    <main>
+      <canvas
+        className="block absolute top-0 left-0 right-0 bottom-0"
+        ref={canvasRef}
+      />
+      <div className="absolute top-0 left-0 right-0">
+        <NavbarComponent />
+        <div className="bg-gray-800 bg-opacity-50 flex justify-center">
+          <div className="flex justify-between container">
+            <div className="flex align-middle items-center mx-3 gap-x-3">
+              <label htmlFor={"Iterations"} className="text-white">Iterations</label>
+              <input
+                type="range"
+                min={1}
+                max={500}
+                value={iterations}
+                onChange={(e) => setIterations(parseInt(e.target.value))}
+              />
+            </div>
+            <div className="flex flex-row-reverse mx-3 gap-x-3">
+              <div className="bg-blue-400 rounded px-3 py-2 my-2">
+                <button onClick={handleDownload}>
+                  <p className="text-bold">Download</p>
+                </button>
               </div>
-              <div className="flex flex-row-reverse mx-3 gap-x-3">
-                <div className="bg-blue-400 rounded px-3 py-2 my-2">
-                  <button onClick={handleDownload}>
-                    <h1 className="text-bold">Download</h1>
-                  </button>
-                </div>
-                <div className="bg-green-400 rounded px-3 py-2 my-2">
-                  <button onClick={handleReset}>
-                    <h1 className="text-bold">Reset</h1>
-                  </button>
-                </div>
+              <div className="bg-green-400 rounded px-3 py-2 my-2">
+                <button onClick={handleReset}>
+                  <p className="text-bold">Reset</p>
+                </button>
               </div>
             </div>
           </div>
         </div>
-      </main>
-    </>
+      </div>
+    </main>
   );
 };
 

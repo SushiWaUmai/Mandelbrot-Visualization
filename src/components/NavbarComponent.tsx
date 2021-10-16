@@ -23,14 +23,14 @@ const NavbarComponent: FunctionComponent<NavbarComponentProps> = () => {
                 href="https://github.com/SushiWaUmai/Mandelbrot-Visualization"
               >
                 <div className="btn btn-effect flex align-middle items-center py-1">
-                  <h1 className="text-bold">Github</h1>
+                  <p className="text-bold">Github</p>
                 </div>
               </Link>
             </span>
             {/* <span className="inline-block">
               <Link passHref href="/about">
                 <div className="btn btn-effect flex align-middle items-center py-1">
-                  <h1 className="text-bold">About</h1>
+                  <p className="text-bold">About</p>
                 </div>
               </Link>
             </span> */}
