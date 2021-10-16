@@ -2,6 +2,7 @@
   "name": "mandelbrot-visualization",
   "version": "1.2.0",
   "private": true,
+  "homepage": "https://sushiwaumai.github.io/Mandelbrot-Visualization/",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
