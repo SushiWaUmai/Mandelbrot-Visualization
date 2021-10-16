@@ -1,35 +1,6 @@
 import Document, { Html, Head, Main, NextScript } from "next/document";
-import manifest from "../../public/manifest.json";
-import { prefix } from "../utils/prefix";
 
 class MyDocument extends Document {
-  componentDidMount() {
-    const manifestElement = document.getElementById("manifest");
-    const manifestString = JSON.stringify({
-      ...manifest,
-      icons: [
-        {
-          src: `${prefix}icons/manifest-icon-192.maskable.png`,
-          sizes: "192x192",
-          type: "image/png",
-          purpose: "maskable any",
-        },
-        {
-          src: `${prefix}icons/manifest-icon-512.maskable.png`,
-          sizes: "512x512",
-          type: "image/png",
-          purpose: "maskable any",
-        },
-      ],
-      start_url: prefix,
-    });
-    manifestElement?.setAttribute(
-      "href",
-      "data:application/json;charset=utf-8," +
-        encodeURIComponent(manifestString)
-    );
-  }
-  
   render() {
     return (
       <Html>
