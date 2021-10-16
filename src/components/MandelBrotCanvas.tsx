@@ -2,7 +2,7 @@ import React, { useRef, FunctionComponent, useState, useEffect } from "react";
 import useWindowSize from "../hooks/useWindowSize";
 import { clamp, lerp } from "../utils/mathhelper";
 import Shader from "../utils/shader";
-import { loadFile } from "../utils/webglutils";
+import { createTexture, loadFile } from "../utils/webglutils";
 import NavbarComponent from "./NavbarComponent";
 import Head from "next/head";
 
@@ -51,11 +51,15 @@ const MandelBrotCanvas: FunctionComponent<MandelBrotCanvasProps> = () => {
           console.log("No WebGL2 avaiable");
           return;
         }
+        const gradient = await createTexture(gl, "gradient.png");
+        gl.activeTexture(gl.TEXTURE0);
+        gl.bindTexture(gl.TEXTURE_2D, gradient);
 
         var vertSrc = await loadFile("shaders/mandelbrot.vert");
         var fragSrc = await loadFile("shaders/mandelbrot.frag");
 
         const s = new Shader(gl, vertSrc, fragSrc);
+        s.setInt("_tex", 0);
         setShader(s);
 
         gl.clearColor(0, 0, 0, 0);
@@ -166,7 +170,9 @@ const MandelBrotCanvas: FunctionComponent<MandelBrotCanvasProps> = () => {
         <div className="bg-gray-800 bg-opacity-50 flex justify-center">
           <div className="flex justify-between container">
             <div className="flex align-middle items-center mx-3 gap-x-3">
-              <label htmlFor={"Iterations"} className="text-white">Iterations</label>
+              <label htmlFor={"Iterations"} className="text-white">
+                Iterations
+              </label>
               <input
                 type="range"
                 min={1}

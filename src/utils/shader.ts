@@ -46,6 +46,12 @@ export default class Shader {
     gl.uniform1f(loc, value);
   }
 
+  setInt(name: string, value: number) {
+    const gl = this.gl;
+    const loc = this.uniformLoc(name);
+    gl.uniform1i(loc, value);
+  }
+
   setVec2(name: string, value: number[]) {
     const gl = this.gl;
     const loc = this.uniformLoc(name);

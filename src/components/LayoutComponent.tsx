@@ -16,7 +16,7 @@ const LayoutComponent: FunctionComponent<LayoutComponentProps> = ({
         <meta property="og:site_name" content="Mandelbrot set visualization" />
         <meta name="robots" content="index, follow" />
         <meta property="og:type" content="website" />
-        <meta name="theme-color" content="#fc2403" />{" "}
+        <meta name="theme-color" content="#fc2403" />
         <meta name="author" content="Eugene Matsumura" />
         <meta name="publisher" content="Eugene Matsumura" />
         <meta name="copyright" content="Eugene Matsumura" />

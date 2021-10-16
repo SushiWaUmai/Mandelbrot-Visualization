@@ -18,7 +18,7 @@ export const createShader = (
       return shader;
     }
 
-    console.log(gl.getShaderInfoLog(shader));
+    console.log(`[SHADER ERROR] ${gl.getShaderInfoLog(shader)}`);
   }
 
   gl.deleteShader(shader);
@@ -45,4 +45,34 @@ export const createProgram = (
 
   gl.deleteProgram(program);
   throw "Could not create Program";
+};
+
+export const createTexture = (
+  gl: WebGL2RenderingContext,
+  path: string
+): Promise<WebGLTexture> => {
+  return new Promise((resolve, reject) => {
+    const tex = gl.createTexture();
+    if (tex) {
+      const img = new Image();
+      img.onload = function () {
+        resolve(handleTextureLoaded(gl, tex, img));
+      };
+      img.src = path;
+    }
+  });
+};
+
+const handleTextureLoaded = (
+  gl: WebGL2RenderingContext,
+  tex: WebGLTexture,
+  img: HTMLImageElement
+) => {
+  gl.bindTexture(gl.TEXTURE_2D, tex);
+  gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, img);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
+  gl.bindTexture(gl.TEXTURE_2D, null);
+
+  return tex;
 };
