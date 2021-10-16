@@ -20,6 +20,7 @@ const LayoutComponent: FunctionComponent<LayoutComponentProps> = ({
         <meta name="author" content="Eugene Matsumura" />
         <meta name="publisher" content="Eugene Matsumura" />
         <meta name="copyright" content="Eugene Matsumura" />
+        <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
       </Head>
       <div className="absolute w-full h-full">{children}</div>
     </>

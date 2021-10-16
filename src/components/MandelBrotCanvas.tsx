@@ -1,6 +1,5 @@
 import React, { useRef, FunctionComponent, useState, useEffect } from "react";
 import useWindowSize from "../hooks/useWindowSize";
-import { clamp, lerp } from "../utils/mathhelper";
 import Shader from "../utils/shader";
 import { createTexture, loadFile } from "../utils/webglutils";
 import NavbarComponent from "./NavbarComponent";
