@@ -1,19 +1,21 @@
 {
   "name": "mandelbrot-visualization",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "export": "next export"
+    "export": "next export",
+    "release": "standard-version"
   },
   "dependencies": {
     "@heroicons/react": "^1.0.4",
     "next": "11.1.2",
     "react": "17.0.2",
-    "react-dom": "17.0.2"
+    "react-dom": "17.0.2",
+    "standard-version": "^9.3.1"
   },
   "devDependencies": {
     "@types/react": "17.0.30",
