@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.2.1](https://github.com/SushiWaUmai/Mandelbrot-Visualization/compare/v1.2.0...v1.2.1) (2021-10-16)
+
+
+### Bug Fixes
+
+* :bug: dynamic manifest update ([7baf240](https://github.com/SushiWaUmai/Mandelbrot-Visualization/commit/7baf240bea0bddb02a9147502d57d0a1286b42fb))
+* :bug: pwa manifest on prod ([31032aa](https://github.com/SushiWaUmai/Mandelbrot-Visualization/commit/31032aabca0bc5891c0c40ffa1e777857f8d0925))
+* :bug: remove prefix ([6daa688](https://github.com/SushiWaUmai/Mandelbrot-Visualization/commit/6daa6886cd821581971884ee02f8d897cd519b60))
+
 ## [1.2.0](https://github.com/SushiWaUmai/Mandelbrot-Visualization/compare/v1.1.0...v1.2.0) (2021-10-16)
 
 
