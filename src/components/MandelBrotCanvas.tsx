@@ -114,8 +114,8 @@ const MandelBrotCanvas: FunctionComponent<MandelBrotCanvasProps> = () => {
     const handleMouseMove = (e: MouseEvent) => {
       if (mouseDown) {
         setCenter((prev) => [
-          prev[0] - ((e.movementX * 2) / height) * scale,
-          prev[1] + ((e.movementY * 2) / height) * scale,
+          prev[0] - (e.movementX / height) * scale,
+          prev[1] + (e.movementY / height) * scale,
         ]);
       }
     };
