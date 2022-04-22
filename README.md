@@ -4,7 +4,20 @@ The website can be found [here](https://sushiwaumai.github.io/Mandelbrot-Visuali
 
 This project uses WebGL 2 and shaders to compute the mandelbrot set.
 
-![Screenshot](public/screenshot.png)
+![Screenshot](./.github/images/screenshot.png)
+
+## Development
+
+### Prerequisites
+- nodejs
+- yarn
+
+### Getting Started
+
+Install all packages and start developing
+```bash
+yarn && yarn dev
+```
 
 ## License
 
