@@ -14,9 +14,16 @@ This project uses WebGL 2 and shaders to compute the mandelbrot set.
 
 ### Getting Started
 
+Clone the repository
+```bash
+git clone https://github.com/SushiWaUmai/Mandelbrot-Visualization.git
+cd Mandelbrot-Visualization
+```
+
 Install all packages and start developing
 ```bash
-yarn && yarn dev
+yarn install
+yarn dev
 ```
 
 ## License
